@@ -1,195 +1,835 @@
-* {
-  box-sizing: border-box;
-}
+        * {
+            box-sizing: border-box;
+        }
 
-body {
-  margin: 0;
-  font-family: "Segoe UI", sans-serif;
-  background: #1f0a12;
-}
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: #1f0a12;
+            overflow-x: hidden; /* Prevent horizontal scroll from animations */
+        }
 
-.nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 18px 40px;
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    color: white;
-}
+        .customclass-logo
+        {
+          width: 86px;
+          height: 85px;
+          border-radius: 50%;
+        }
 
-.nav ul {
-    list-style: none;
-    display: flex;
-    gap: 25px;
-    justify-content: center;
-    align-items: center;
-}
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 40px;
+            position: absolute;
+            z-index: 10;
+            width: 100%;
+            color: white;
+        }
 
-.nav li { cursor: pointer; }
+        .nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            align-items: center;
+        }
 
-.nav .btn {
-    padding: 10px 20px;
-    border-radius: 25px;
-    border: none;
-    background: #3877d4;
-    color: #1f0a12;
-    font-weight: bold;
-    cursor: pointer;
-}
+        .nav li, .nav li a { cursor: pointer;     color: white;    text-decoration: none;}
 
-.banner {
-  position: relative;
-  height: 480px;
-  background: radial-gradient(circle at center, #123c9f, #4c0505);
-  color: white;
-  display: flex;
-  align-items: center;
-  padding: 60px;
-  overflow: visible;
-  width: auto;
-  max-width: 1264px;
-}
+        .nav .btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            background: #3877d4;
+            color: #1f0a12;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-.banner-text {
-  margin-top: 100px;
-  max-width: 500px;
-  z-index: 2;
-  animation: floatText 4s ease-in-out infinite;
-}
+        .banner {
+            position: relative;
+            height: 580px;
+            /* Fallback background if Vanta fails */
+            background: radial-gradient(circle at center, #123c9f, #4c0505);
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 60px;
+            overflow: hidden;
+            width: 100%;
+        }
 
-.banner-text h1 { font-size: 38px; margin-bottom: 12px; }
-.banner-text p { opacity: 0.9; }
-.banner-text button {
-    margin-top: 20px;
-    padding: 12px 26px;
-    border-radius: 25px;
-    border: none;
-    background: #3877d4;
-    color: #1f0a12;
-    font-weight: bold;
-    cursor: pointer;
-}
+        .banner-text {
+            margin-top: 50px;
+            max-width: 500px;
+            z-index: 2;
+            animation: floatText 4s ease-in-out infinite;
+        }
 
-.heart {
-  position: absolute;
-  right: 90px;
-  font-size: 140px;
-  animation: heartbeat 5s infinite;
-  z-index: 2;
-  top: 100px;
-  overflow: hidden;
-}
+        .banner-text h1 { font-size: 38px; margin-bottom: 12px; }
+        .banner-text p { opacity: 0.9; }
+        .banner-text button {
+            margin-top: 20px;
+            padding: 12px 26px;
+            border-radius: 25px;
+            border: none;
+            background: #3877d4;
+            color: #1f0a12;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
-.wid-img { width: 300px; }
+        .heart {
+            position: absolute;
+            right: 15%;
+            font-size: 140px;
+            animation: heartbeat 5s infinite;
+            z-index: 2;
+        }
 
-.challenges {
-    padding: 60px 20px;
-    background: linear-gradient(179deg, #1f0a12, #1f0a12, #081d44, #091d43);
-    color: #fff;
-    text-align: center;
-}
+        .wid-img { width: 220px; }
 
-.challenges h2 {
-    font-size: 2.5rem;
-    margin-bottom: 40px;
-    color: white;
-}
+        .challenges {
+            padding: 60px 20px;
+            background: linear-gradient(179deg, #1f0a12, #1f0a12, #081d44, #091d43);
+            color: #fff;
+            text-align: center;
+            position: relative;
+        }
 
-.card-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-}
+        .challenges h2 {
+          margin-bottom: 40px;
+        }
 
-.card {
-    position: relative;
-    background-color: rgba(255, 255, 255, 0.05);
-    padding: 25px;
-    width: 280px;
-    backdrop-filter: blur(10px);
-    overflow: hidden;
-    cursor: pointer;
-}
+        .card-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
 
-/* Sides for the snake border */
-.card span {
-    position: absolute;
-    display: block;
-    background: #3877d4; /* Blue bolt color */
-    transition: all 0.5s linear;
-}
+        .card {
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            width: 280px;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            cursor: pointer;
+            text-align: left;
+        }
 
-.card .top,
-.card .bottom {
-    width: 100%;
-    height: 2px;
-    transform: scaleX(0);
-}
+        /* Sides for the snake border */
+        .card span {
+            position: absolute;
+            display: block;
+            background: #3877d4; /* Blue bolt color */
+            transition: all 0.5s linear;
+        }
 
-.card .left,
-.card .right {
-    width: 2px;
-    height: 100%;
-    transform: scaleY(0);
-}
+        .card .top,
+        .card .bottom {
+            width: 100%;
+            height: 2px;
+            transform: scaleX(0);
+        }
 
-.card .top { top: 0; left: 0; transform-origin: left; }
-.card .right { top: 0; right: 0; transform-origin: top; }
-.card .bottom { bottom: 0; left: 0; transform-origin: right; }
-.card .left { top: 0; left: 0; transform-origin: bottom; }
+        .card .left,
+        .card .right {
+            width: 2px;
+            height: 100%;
+            transform: scaleY(0);
+        }
 
-.card:hover { margin-top: 5px; transition: all 500ms ease-in-out; background-image: linear-gradient(#091d43, black);}
-.card:hover .top { transform: scaleX(1); transition-delay: 0s; }
-.card:hover .right { transform: scaleY(1); transition-delay: 0.125s; }
-.card:hover .bottom { transform: scaleX(1); transition-delay: 0.25s; }
-.card:hover .left { transform: scaleY(1); transition-delay: 0.375s; }
+        .card .top { top: 0; left: 0; transform-origin: left; }
+        .card .right { top: 0; right: 0; transform-origin: top; }
+        .card .bottom { bottom: 0; left: 0; transform-origin: right; }
+        .card .left { top: 0; left: 0; transform-origin: bottom; }
 
-
-.card h3 { margin-bottom: 15px; font-size: 1.5rem; color: white; }
-.card p { font-size: 1rem; color: #e0e0e0; }
-
-.challenges.spotlight-wrapper {
-    position: relative;
-    overflow: hidden;
-}
-.carda
-{
-    margin-top: 20px;
-}
-
-.challenges.spotlight-wrapper .spotlight {
-    
-    display: none; /* hidden by default */
-    position: absolute;
-    pointer-events: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgb(81 20 20) 0%, rgb(76 121 150 / 12%) 70%);
-    z-index: 1;
-    transform: translate(-50%, -50%);
-
-}
+        .card:hover { margin-top: 5px; transition: all 500ms ease-in-out; background-image: linear-gradient(#091d43, black);}
+        .card:hover .top { transform: scaleX(1); transition-delay: 0s; }
+        .card:hover .right { transform: scaleY(1); transition-delay: 0.125s; }
+        .card:hover .bottom { transform: scaleX(1); transition-delay: 0.25s; }
+        .card:hover .left { transform: scaleY(1); transition-delay: 0.375s; }
 
 
-.challenges.spotlight-wrapper .container {
-    position: relative;
-    z-index: 2;
-}
+        .card h3 { margin-bottom: 15px; font-size: 1.5rem; color: white; }
+        .card p { font-size: 1rem; color: #e0e0e0; }
 
-@keyframes heartbeat {
-  0% { transform: scale(1); }
-  30% { transform: scale(1.25); }
-  50% { transform: scale(1); }
-  70% { transform: scale(1.3); }
-  100% { transform: scale(1); }
-}
+        .challenges.spotlight-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+        .carda
+        {
+            margin-top: 20px;
+        }
 
-@keyframes floatText {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0); }
-}
+        .challenges.spotlight-wrapper .spotlight {
+            display: none; /* hidden by default */
+            position: absolute;
+            pointer-events: none;
+            width: 200px; /* Made larger for visibility */
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: overlay;
+        }
+
+        .challenges.spotlight-wrapper .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* =========================
+           HEART CRISIS – DATA VIS
+           ========================= */
+
+        .crisis-section {
+            padding: 90px 20px;
+            background-image: linear-gradient(179deg, #081d44, #091d43, #1f0a12, #1f0a12);
+            color: white;
+            text-align: center;
+        }
+
+        /* Title */
+        .crisis-title {
+            font-size: 3rem;
+            letter-spacing: 1px;
+            border-bottom: 3px solid #ef4444;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        /* Live Counter */
+        .live-counter span {
+            font-size: 4.2rem;
+            font-weight: 700;
+            color: #f87171;
+            text-shadow: 0 0 18px rgba(248,113,113,.6);
+        }
+
+        .live-counter p {
+            margin-top: 10px;
+            opacity: 0.85;
+        }
+
+        /* Rings */
+        .ring-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin: 80px 0;
+            flex-wrap: wrap;
+        }
+
+        .ring {
+            position: relative;
+            width: 140px;
+            height: 140px;
+        }
+
+        .ring svg {
+            transform: rotate(-90deg);
+        }
+
+        .ring-text {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ring-text strong {
+            font-size: 1.8rem;
+        }
+
+        .ring-text span {
+            font-size: 0.85rem;
+            opacity: 0.85;
+            text-align: center;
+            max-width: 55%;
+        }
+
+        /* Detection Gap Bar */
+        .gap-bar {
+            max-width: 700px;
+            margin: 60px auto 0;
+        }
+
+        .gap-bar h3 {
+            margin-bottom: 15px;
+            color: #fbbf24;
+        }
+
+        .bar {
+            height: 14px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .bar .fill {
+            width: 80%;
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #f87171);
+            animation: growBar 2s ease-out forwards;
+        }
+
+        .gap-bar p {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            opacity: 0.85;
+        }
+
+        .solution-section {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 60px;
+            padding: 100px;
+            background-image: linear-gradient(179deg, rgb(31, 10, 18), rgb(31, 10, 18), rgb(37 0 1), rgb(74 2 4));
+            color: white;
+            align-items: center;
+        }
+
+        .solution-left h3 {
+            font-size: 1.6rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .solution-left p {
+            font-size: 1.05rem;
+            opacity: 0.85;
+            max-width: 450px; 
+        }
+
+        .step-dots {
+            margin-top: 30px;
+        }
+
+        .step-dots span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #334155;
+            margin-right: 10px;
+            transition: background 0.3s;
+        }
+
+        .step-dots .active {
+            background: #3b82f6;
+            box-shadow: 0 0 12px #3b82f6;
+        }
+
+        /* HEART */
+        .heart-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    /* =========================
+      ROADMAP – DARK WAVE STYLE
+      ========================= */
+
+    .roadmap-section {
+      padding: 100px 20px;
+      /* Dark background to match the aesthetic */
+      background: #1f0a12; 
+      background: linear-gradient(179deg,  rgb(74 2 4), rgb(37 0 1));
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    .roadmap-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .roadmap-title {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      background: linear-gradient(to right, #f472b6, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .roadmap-header p {
+      color: #ffffff;
+      font-size: 1.1rem;
+    }
+
+    /* Container for Wave and Items */
+    .roadmap-container {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 450px; /* Fixed height to contain the wave layout */
+      display: flex;
+      align-items: center;
+    }
+
+    /* 1. The SVG Wave Background */
+    .wave-bg {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 250px;
+      transform: translateY(-50%);
+      z-index: 1;
+      pointer-events: none; /* Let clicks pass through */
+    }
+
+    .wave-bg svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    /* 2. Items Wrapper */
+    .roadmap-items {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      z-index: 2;
+      padding: 0 40px; /* Spacing from edges */
+    }
+
+    /* 3. Individual Item Styling */
+    .rm-item {
+      position: relative;
+      width: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* --- Positioning Logic (Peak vs Trough) --- */
+    /* Items on the "Peak" of the wave */
+    .rm-item.peak {
+      justify-content: flex-start;
+      padding-top: 20px; /* Push content slightly down */
+    }
+
+    .rm-item.peak .rm-content {
+      margin-bottom: 20px; /* Space between text and dot */
+    }
+
+    .rm-item.peak .rm-connector {
+      height: 60px; /* Length of line dropping to wave */
+      background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.5));
+    }
+
+    .rm-item.peak .rm-dot {
+      margin-top: -5px; /* Adjust to sit exactly on line */
+    }
+
+
+    /* Items in the "Trough" (valley) of the wave */
+    .rm-item.trough {
+      justify-content: flex-end;
+      padding-bottom: 40px;
+    }
+
+    .rm-item.trough .rm-content {
+      order: 2; /* Text goes below dot */
+      margin-top: 20px;
+    }
+
+    .rm-item.trough .rm-connector {
+      order: 1;
+      height: 60px; /* Length of line rising from wave */
+      background: linear-gradient(to top, rgba(255,255,255,0), rgba(255,255,255,0.5));
+    }
+
+    .rm-item.trough .rm-dot {
+      order: 1; /* Dot sits between connector and wave */
+    }
+
+
+    /* --- Content Styling --- */
+    .rm-content {
+      text-align: left;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(5px);
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 3px solid #fbbf24;
+      transition: transform 0.3s ease;
+    }
+
+    .rm-item:hover .rm-content {
+      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .rm-date {
+      display: block;
+      font-size: 0.85rem;
+      color: #fbbf24;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .rm-content h3 {
+      font-size: 1.1rem;
+      margin: 0 0 5px 0;
+      color: #fff;
+    }
+
+    .rm-content p {
+      font-size: 0.85rem;
+      color: #d1d5db;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    /* --- Connector Line --- */
+    .rm-connector {
+      width: 1px;
+    }
+
+    /* --- Glowing Dot --- */
+    .rm-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #1f0a12;
+      border: 2px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+      z-index: 5;
+    }
+
+    .dot-inner {
+      width: 6px;
+      height: 6px;
+      background: #fff;
+      border-radius: 50%;
+    }
+
+    .rm-item.trough.abc-x {
+        top: 85px;
+    }
+
+    /* Responsive Mobile Styling */
+    @media (max-width: 768px) {
+      .roadmap-container {
+        height: auto;
+        flex-direction: column;
+        padding-left: 30px; /* Space for vertical line */
+      }
+
+      /* Hide Wave on mobile, switch to vertical timeline */
+      .wave-bg { display: none; }
+
+      .roadmap-items {
+        flex-direction: column;
+        padding: 0;
+        border-left: 2px solid rgba(255,255,255,0.1);
+      }
+
+      .rm-item {
+        width: 100%;
+        flex-direction: row !important; /* Force row layout */
+        justify-content: flex-start !important;
+        margin-bottom: 30px;
+        padding: 0 !important;
+      }
+
+      .rm-dot {
+        position: absolute;
+        left: -9px; /* Align with border line */
+        top: 15px;
+      }
+
+      .rm-connector { display: none; }
+
+      .rm-content {
+        margin-left: 20px;
+        width: 100%;
+        margin-top: 0 !important;
+        order: unset !important;
+      }
+    }
+
+
+      /* =========================
+        AI POWER SECTION - FUTURISTIC UI
+        ========================= */ 
+
+      .pill-section {
+          padding: 100px 20px;
+          background: #1f0a12; /* Matches your site background */
+          background: linear-gradient(#270001, #1f0a12);
+          font-family: 'Segoe UI', sans-serif;
+          overflow: hidden;
+      }
+
+      .pill-container {
+          max-width: 900px; /* Narrower width for the stack look */
+          margin: 0 auto;
+      }
+
+      .header-center {
+          text-align: center;
+          margin-bottom: 60px;
+      }
+
+      .center-bar {
+          margin: 10px auto 0;
+      }
+
+      /* --- The Stack Wrapper --- */
+      .pill-stack {
+          display: flex;
+          flex-direction: column;
+          gap: 30px;
+      }
+
+      /* --- Individual Pill Card --- */
+      .pill-card {
+          /* Using CSS Variable for dynamic colors */
+          position: relative;
+          display: flex;
+          align-items: center;
+          background: rgba(30, 41, 59, 0.6); /* Semi-transparent dark bg */
+          backdrop-filter: blur(10px);
+          border: 1px solid var(--theme-color);
+          border-radius: 100px; /* Creates the Pill Shape */
+          padding: 20px 30px;
+          color: white;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+          transition: all 0.3s ease;
+      }
+
+      /* Right Aligned Variant */
+      .pill-card.reverse {
+          flex-direction: row-reverse;
+          text-align: right;
+      }
+
+      /* --- The Number Circle --- */
+      .pill-number {
+          flex-shrink: 0;
+          width: 70px;
+          height: 70px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.05);
+          border: 4px solid var(--theme-color); /* Thick colored border */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.5rem;
+          font-weight: 800;
+          color: #fff;
+          box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+      }
+
+      /* Spacing between number and text */
+      .pill-card:not(.reverse) .pill-number {
+          margin-right: 30px;
+      }
+
+      .pill-card.reverse .pill-number {
+          margin-left: 30px;
+      }
+
+      /* --- Text Content --- */
+      .pill-content {
+          flex-grow: 1;
+      }
+
+      .pill-content h3 {
+          margin: 0 0 5px 0;
+          font-size: 1.4rem;
+          font-weight: 700;
+          /* Title color is handled inline by React using the variable */
+      }
+
+      .pill-content p {
+          margin: 0;
+          font-size: 1rem;
+          color: #cbd5e1; /* Light grey text */
+          line-height: 1.5;
+      }
+
+      /* --- Mobile Responsiveness --- */
+      @media (max-width: 768px) {
+          .pill-card, .pill-card.reverse {
+              flex-direction: column;
+              border-radius: 20px; /* Less round on mobile for space */
+              text-align: center;
+              padding: 30px 20px;
+          }
+
+          .pill-card:not(.reverse) .pill-number,
+          .pill-card.reverse .pill-number {
+              margin: 0 0 20px 0;
+          }
+      }
+
+      /* =========================
+      VANTA FOOTER (DYNAMIC)
+      ========================= */
+
+    .footer-section {
+        position: relative;
+        margin-top: 100px;
+        /* Removed static background-image */
+        /* Vanta handles the background color (0x1f0a12) */
+        color: white;
+        font-family: 'Segoe UI', sans-serif;
+        overflow: hidden;
+        min-height: 350px; /* Ensure height so animation is visible */
+        display: flex;
+        align-items: center; /* Center content vertically if desired */
+    }
+
+    /* We removed .footer-overlay because the Vanta effect creates its own background */
+
+    .footer-content {
+        position: relative;
+        z-index: 2; /* Ensures text sits ON TOP of the animation */
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 60px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        pointer-events: none; /* Lets mouse interact with Vanta canvas behind */
+    }
+
+    /* Re-enable pointer events for links so they are clickable */
+    .footer-links, .footer-copy {
+        pointer-events: auto;
+    }
+
+    /* --- Typography & Layout (Same as before) --- */
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .brand-block h3 {
+        font-size: 2rem;
+        margin: 0;
+        background: linear-gradient(90deg, #60a5fa, #ffffff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+    }
+
+    .brand-block p {
+        margin: 5px 0 0 0;
+        font-size: 0.9rem;
+        color: #94a3b8;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .link-row {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .link-row span {
+        font-size: 1rem;
+        color: #cbd5e1;
+        letter-spacing: 0.5px;
+    }
+
+    .link-row strong {
+        color: #60a5fa;
+        margin-right: 10px;
+    }
+
+    .footer-copy {
+        font-size: 0.9rem;
+        color: #64748b;
+        font-weight: 500;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        .footer-content {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 40px;
+        }
+    }
+
+
+      /* --- Responsive Design --- */
+      @media (max-width: 1024px) {
+          .ai-main-title { font-size: 2.8rem; }
+          .ai-content-layout {
+              grid-template-columns: 1fr; /* Stack columns */
+              gap: 30px;
+          }
+          .ai-feature-grid {
+              /* Keep 2x2 grid on tablets, looks okay */
+              gap: 20px;
+          }
+          .prominent-card {
+              height: auto; /* Let height adjust naturally when stacked */
+              padding: 40px;
+          }
+      }
+
+      @media (max-width: 768px) {
+          .ai-main-title { font-size: 2.2rem; }
+          .ai-header-block { margin-bottom: 40px; }
+          .ai-feature-grid {
+              grid-template-columns: 1fr; /* Stack everything into one column on mobile */
+          }
+      }
+
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes growBar {
+            from { width: 0; }
+            to { width: 80%; }
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            30% { transform: scale(1.25); }
+            50% { transform: scale(1); }
+            70% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes floatText {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .solution-section { grid-template-columns: 1fr; }
+            .road-svg { display: none; }
+            .road-step-card.left, .road-step-card.right { left: 0; width: 100%; text-align: center; align-items: center; }
+        }
