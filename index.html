@@ -29,11 +29,11 @@
                         <img src="./img/logo.jpg" className="customclass-logo"/>
                     </div>
                     <ul>
-                        <li>Home</li>
+                        <li><a href="./index.html">Home</a></li>
                         <li>Services</li>
                         <li><a href="./Form.html">Medics</a></li>
                         <li>About</li>
-                        <li className="btn">Login</li>
+                        <li className="btn"><a href="./Form.html">Login</a></li>
                     </ul>
                 </nav>
             );
@@ -68,33 +68,69 @@
                 <section className="banner" ref={vantaRef}>
                     <div className="banner-text">
                         <h1>TAKE CARE OF YOUR HEART</h1>
-                        <p>AI-powered early disease detection with real-time heart insights.</p>
-                        <button>Get in Touch</button>
+                        <h2>with Intelligent Health Solutions</h2>
+                        <p>Revolutionizing cardiac health through intelligent risk forecasting and personalized preventive care</p>
+                        <button>About Us</button>
                     </div>
                 </section>
             );
         }
 
         function Challenges() {
-            const spotlightRef = useRef(null);
+            const spotlightRef = React.useRef(null);
+            const sliderRef = React.useRef(null);
+            const [activeId, setActiveId] = React.useState(1); // Start with first item active
 
+            const challengesData = [
+                { id: 1, title: "Rising Global Prevalence", text: "Cardiovascular diseases remain the leading global cause of mortality, exacerbated by aging populations and the rising incidence of metabolic syndrome." },
+                { id: 2, title: "Subclinical Progression", text: "Atherosclerosis often develops silently over decades. Standard screenings frequently fail to detect biomarkers before an acute cardiac event occurs." },
+                { id: 3, title: "Fragmented Health Data", text: "Critical patient data is siloed across Electronic Medical Records (EMRs), wearables, and genetic profiles, preventing a holistic view of patient risk." },
+                { id: 4, title: "Socioeconomic Disparities", text: "High costs and geographic barriers limit access to advanced preventive care, disproportionately affecting rural and underserved urban communities." },
+                { id: 5, title: "Diagnostic Latency", text: "The time gap between symptom onset and clinical diagnosis remains too wide, often resulting in irreversible myocardial damage before treatment begins." },
+                { id: 6, title: "Demographic Misdiagnosis", text: "Cardiac symptoms in women and younger demographics are frequently atypical, leading to high rates of misdiagnosis and missed intervention windows." },
+                { id: 7, title: "Clinical Resource Strain", text: "A global shortage of cardiologists and overwhelmed healthcare systems reduce the time available for in-depth preventative patient counseling." },
+                { id: 8, title: "Adherence Failure", text: "Long-term patient compliance with medication and lifestyle changes is historically low due to a lack of continuous, personalized behavioral reinforcement." }
+            ];
+
+            // Spotlight Logic
             const handleMouseMove = (e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
                 if (spotlightRef.current) {
-                    spotlightRef.current.style.left = x + "px";
-                    spotlightRef.current.style.top = y + "px";
+                    spotlightRef.current.style.left = (e.clientX - rect.left) + "px";
+                    spotlightRef.current.style.top = (e.clientY - rect.top) + "px";
+                }
+            };
+            const handleMouseEnter = () => { if (spotlightRef.current) spotlightRef.current.style.display = "block"; };
+            const handleMouseLeave = () => { if (spotlightRef.current) spotlightRef.current.style.display = "none"; };
+
+            // Scroll Handler to detect Active Center Item
+            const handleScroll = () => {
+                if (sliderRef.current) {
+                    const slider = sliderRef.current;
+                    const cardWidth = 320; 
+                    const gap = 30;
+                    const totalItemWidth = cardWidth + gap;
+                    
+                    // Calculate index based on scroll position
+                    const scrollLeft = slider.scrollLeft;
+                    const centerIndex = Math.round(scrollLeft / totalItemWidth);
+                    
+                    // Update active ID based on index
+                    if (challengesData[centerIndex]) {
+                        setActiveId(challengesData[centerIndex].id);
+                    }
                 }
             };
 
-            const handleMouseEnter = () => {
-                if (spotlightRef.current) spotlightRef.current.style.display = "block";
-            };
-
-            const handleMouseLeave = () => {
-                if (spotlightRef.current) spotlightRef.current.style.display = "none";
+            // Navigation Buttons
+            const slide = (direction) => {
+                if (sliderRef.current) {
+                    const scrollAmount = 350; // 320 width + 30 gap
+                    sliderRef.current.scrollBy({
+                        left: direction === 'left' ? -scrollAmount : scrollAmount,
+                        behavior: 'smooth'
+                    });
+                }
             };
 
             return (
@@ -106,29 +142,28 @@
                 >
                     <div className="spotlight" ref={spotlightRef}></div>
 
-                    <div className="container"> 
-                        <h2 className="roadmap-title">Current Challenges</h2>  
-                        <div className="card-wrapper">
-                            {[1, 2, 3].map((item) => (
-                                <div className="card" key={item}>
-                                    <span className="top"></span>
-                                    <span className="right"></span>
-                                    <span className="bottom"></span>
-                                    <span className="left"></span>
-                                    <h3>Challenge {item}</h3>
-                                    <p>Description detailing the specific heart health challenge goes here.</p>
-                                </div>
-                            ))}
+                    <div className="container">
+                        <h2 className="roadmap-title">Current Challenges</h2>
+                        <p className="sub-p">Heart disease remains the leading cause of death globally, with millions at risk.</p>
+                        
+                        <div className="slider-controls">
+                            <button className="slider-btn prev" onClick={() => slide('left')}>&#8592;</button>
+                            <button className="slider-btn next" onClick={() => slide('right')}>&#8594;</button>
                         </div>
-                        <div className="card-wrapper carda">
-                            {[4, 5].map((item) => (
-                                <div className="card" key={item}>
+
+                        {/* Added onScroll Listener */}
+                        <div className="slider-wrapper" ref={sliderRef} onScroll={handleScroll}>
+                            {challengesData.map((item) => (
+                                <div 
+                                    className={`card ${item.id === activeId ? "active" : ""}`} 
+                                    key={item.id}
+                                >
                                     <span className="top"></span>
                                     <span className="right"></span>
                                     <span className="bottom"></span>
                                     <span className="left"></span>
-                                    <h3>Challenge {item}</h3>
-                                    <p>Description detailing the specific heart health challenge goes here.</p>
+                                    <h3>{item.title}</h3>
+                                    <p>{item.text}</p>
                                 </div>
                             ))}
                         </div>
@@ -136,44 +171,66 @@
                 </section>
             );
         }
-
         function HeartCrisisSection() {
-            const [todayDeaths, setTodayDeaths] = useState(0);
+            const [todayDeaths, setTodayDeaths] = React.useState(25000); // Start mid-day for visual impact
 
-            // WHO ≈ 19.8M deaths/year
-            const deathsPerSecond = 19800000 / 365 / 24 / 60 / 60;
+            // WHO Data: ~17.9M - 19.8M deaths/year globally
+            // Approx 0.63 deaths per second
+            const deathsPerSecond = 0.63;
 
-            useEffect(() => {
+            React.useEffect(() => {
                 const interval = setInterval(() => {
-                    setTodayDeaths(d => d + deathsPerSecond);
+                    setTodayDeaths(prev => prev + deathsPerSecond);
                 }, 1000);
                 return () => clearInterval(interval);
             }, []);
 
             return (
                 <section className="crisis-section">
-                     <h2 className="roadmap-title">The Growing Heart Disease Crisis</h2>   
-
-                    {/* Live Counter */}
-                    <div className="live-counter">
-                        <span>{Math.floor(todayDeaths + 10000).toLocaleString()}</span>
-                        <p>Estimated deaths today worldwide</p>
+                    {/* Background ECG Pulse Animation */}
+                    <div className="ecg-bg">
+                        <svg viewBox="0 0 500 150" preserveAspectRatio="none">
+                            <path d="M0,75 L50,75 L60,40 L70,110 L80,75 L130,75 L140,20 L150,130 L160,75 L500,75" 
+                                className="ecg-line" />
+                        </svg>
                     </div>
 
-                    {/* Circular Stats */}
-                    <div className="ring-stats">
-                        <Ring value={32} label="Preventable Cases" color="#3b82f6" />
-                        <Ring value={80} label="Lack Early Detection" color="#f87171" />
-                        <Ring value={90} label="Lifestyle Risk Factors" color="#fbbf24" />
-                    </div>
-
-                    {/* Detection Gap Bar */}
-                    <div className="gap-bar">
-                        <h3>Detection Gap</h3>
-                        <div className="bar">
-                            <div className="fill"></div>
+                    <div className="crisis-container">
+                        <div className="crisis-header">
+                            <h2 className="roadmap-title">The Silent Epidemic</h2> 
+                            <p>Cardiovascular disease claims more lives annually than all forms of cancer combined.</p>
                         </div>
-                        <p>Most high-risk patients remain undetected until critical stages</p>
+
+                        {/* Real-time Counter Block */}
+                        <div className="counter-row">
+                            <div className="counter-box">
+                                <div className="live-indicator">
+                                    <span className="blink-dot"></span> LIVE ESTIMATE
+                                </div>
+                                <span className="count-number">
+                                    {Math.floor(todayDeaths).toLocaleString()}
+                                </span>
+                                <span className="count-label">Global Deaths Today</span>
+                            </div>
+                            
+                           
+                        </div>
+
+                        {/* Detailed Stats Grid */}
+                        <div className="ring-stats">
+                            <div className="stat-card">
+                                <Ring value={80} label="Premature Heart Attacks" color="#f87171" />
+                                <p className="stat-desc"><strong>Preventable</strong> through early risk detection and lifestyle changes.</p>
+                            </div>
+                            <div className="stat-card">
+                                <Ring value={60} label="Silent Progression" color="#3b82f6" />
+                                <p className="stat-desc">Cases show <strong>no symptoms</strong> before the first acute cardiac event.</p>
+                            </div>
+                            <div className="stat-card">
+                                <Ring value={47} label="Out-of-Hospital Deaths" color="#fbbf24" />
+                                <p className="stat-desc">Sudden cardiac arrests occurring <strong>without medical aid</strong> nearby.</p>
+                            </div>
+                        </div>
                     </div>
                 </section>
             );
@@ -267,11 +324,11 @@
 
         function ProductRoadmap() {
             const steps = [
-                { num: "Q1", year: "2025", title: "Data Collection", desc: "Gathering and cleaning heart-health datasets.", position: "peak" },
-                { num: "Q2", year: "2025", title: "Feature Eng.", desc: "Selecting key biomarkers for risk analysis.", position: "trough", customClass: "abc-x" },
-                { num: "Q3", year: "2025", title: "Model Training", desc: "Training ESLM & IRES models on high-performance GPUs.", position: "peak" },
-                { num: "Q4", year: "2025", title: "System Integration", desc: "Connecting AI backend to the Next.js frontend.", position: "trough" },
-                { num: "Q1", year: "2026", title: "Deployment", desc: "Public launch and scaling infrastructure.", position: "peak" }
+                { num: "Phase 1", year: "2025", title: "Data Collection & Core Model", desc: "We train our machine learning model using the available heart-health dataset. Data is cleaned, features are selected, and the model learns patterns that indicate heart attack risk.", position: "peak" },
+                { num: "Phase 2", year: "2025", title: "Model Refinement & Accuracy", desc: "We evaluate the model using a 70–30 train-test split to measure accuracy, precision, and overall performance. This ensures the model works well on unseen data.", position: "trough", customClass: "abc-x" },
+                { num: "Phase 3", year: "2025", title: "Frontend & Backend Development", desc: "We build the user interface for taking input values and a backend API that sends this data to the trained model and returns the risk prediction.", position: "peak", customClass: "abc-y" },
+                { num: "Phase 4", year: "2025", title: "Deployment", desc: "The complete web application is deployed using Railway.app or GitHub, making it accessible online with continuous deployment support.", position: "trough", customClass: "abc-z" },
+                { num: "Phase 5", year: "2026", title: "Continuous Evolution and Improvement", desc: "We monitor performance, gather feedback, retrain the model with new data, and enhance UI/UX to improve prediction accuracy over time.", position: "peak", customClass: "abc-zap" }
             ];
 
             return (
@@ -319,14 +376,16 @@
                             <h3>{step.title}</h3>
                             <p>{step.desc}</p>
                         </div>
+                        <div class="flex-con"> 
+                            {/* Vertical Connector Line */}
+                             <div className="rm-connector"></div>
                         
-                        {/* Vertical Connector Line */}
-                        <div className="rm-connector"></div>
-                        
-                        {/* Glowing Dot on the Wave */}
-                        <div className="rm-dot">
-                            <div className="dot-inner"></div>
+                            {/* Glowing Dot on the Wave */}
+                            <div className="rm-dot">
+                                <div className="dot-inner"></div>
+                            </div>
                         </div>
+                       
                         </div>
                     ))}
                     </div>
@@ -456,15 +515,12 @@
                                 <img src="./img/logo.jpg" class="customclass-logo"/>  
                             </div>
                             <div className="link-row">
-                                <span><strong>Medics</strong> Dr. Sarah Connor, Dr. Miles Bennett</span>
-                                <span><strong>Clinics</strong> New York, London, Tokyo, Berlin</span>
-                                <span><strong>Support</strong> Privacy Policy | Terms of Service</span>
+                                <span>Universität Paderborn</span>
+                                <span>Warburger Straße 100</span>
+                                <span>33098, Paderborn Germany</span>
                             </div>
                         </div>
-                        
-                        <div className="footer-copy">
-                            ©2025 HeartGuard AI
-                        </div>
+                         
                     </div>
                 </footer>
             );

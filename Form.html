@@ -350,11 +350,11 @@
                         <img src="./img/logo.jpg" className="customclass-logo"/>
                     </div>
                     <ul>
-                        <li>Home</li>
+                        <li><a href="./index.html">Home</a></li>
                         <li>Services</li>
                         <li><a href="./Form.html">Medics</a></li>
                         <li>About</li>
-                        <li className="btn">Sign Up</li>
+                        <li className="btn"><a href="./Form.html">Login</a></li>
                     </ul>
                 </nav>
             );
@@ -433,7 +433,7 @@
         }
 
         // 3. FOOTER COMPONENT (Vanta Animation)
-        function Footer() {
+       function Footer() {
         // 1. Initialize Refs and State for Vanta
             const footerRef = React.useRef(null);
             const [vantaEffect, setVantaEffect] = React.useState(null);
@@ -474,20 +474,16 @@
                                 <img src="./img/logo.jpg" class="customclass-logo"/>  
                             </div>
                             <div className="link-row">
-                                <span><strong>Medics</strong> Dr. Sarah Connor, Dr. Miles Bennett</span>
-                                <span><strong>Clinics</strong> New York, London, Tokyo, Berlin</span>
-                                <span><strong>Support</strong> Privacy Policy | Terms of Service</span>
+                                <span>Universität Paderborn</span>
+                                <span>Warburger Straße 100</span>
+                                <span>33098, Paderborn Germany</span>
                             </div>
                         </div>
-                        
-                        <div className="footer-copy">
-                            ©2025 HeartGuard AI
-                        </div>
+                         
                     </div>
                 </footer>
             );
         }
-
 
         // 4. MAIN APP COMPONENT
         function App() {

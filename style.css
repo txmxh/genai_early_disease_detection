@@ -35,7 +35,7 @@
             align-items: center;
         }
 
-        .nav li, .nav li a { cursor: pointer;     color: white;    text-decoration: none;}
+        .nav li, .nav li a { cursor: pointer;     color: white;    text-decoration: none; font-weight: 600;}
 
         .nav .btn {
             padding: 10px 20px;
@@ -62,12 +62,13 @@
 
         .banner-text {
             margin-top: 50px;
-            max-width: 500px;
+            max-width: 550px;
             z-index: 2;
             animation: floatText 4s ease-in-out infinite;
         }
 
-        .banner-text h1 { font-size: 38px; margin-bottom: 12px; }
+        .banner-text h1 { font-size: 38px; margin-bottom: 0px; }
+        .banner-text h2 { font-size: 30px; margin: 0px;}
         .banner-text p { opacity: 0.9; }
         .banner-text button {
             margin-top: 20px;
@@ -98,8 +99,10 @@
             position: relative;
         }
 
-        .challenges h2 {
+        .challenges .sub-p {
           margin-bottom: 40px;
+            max-width: 60%;
+            margin-inline: auto;
         }
 
         .card-wrapper {
@@ -147,12 +150,12 @@
         .card .bottom { bottom: 0; left: 0; transform-origin: right; }
         .card .left { top: 0; left: 0; transform-origin: bottom; }
 
-        .card:hover { margin-top: 5px; transition: all 500ms ease-in-out; background-image: linear-gradient(#091d43, black);}
+        .card:hover { margin-top: 2px; transition: all 500ms ease-in-out; }
         .card:hover .top { transform: scaleX(1); transition-delay: 0s; }
         .card:hover .right { transform: scaleY(1); transition-delay: 0.125s; }
         .card:hover .bottom { transform: scaleX(1); transition-delay: 0.25s; }
         .card:hover .left { transform: scaleY(1); transition-delay: 0.375s; }
-
+        .carda .card:hover {background-image: linear-gradient(#122444, #081d43);}
 
         .card h3 { margin-bottom: 15px; font-size: 1.5rem; color: white; }
         .card p { font-size: 1rem; color: #e0e0e0; }
@@ -292,6 +295,7 @@
             grid-template-columns: 1.1fr 1fr;
             gap: 60px;
             padding: 100px;
+            padding-top: 0px;
             background-image: linear-gradient(179deg, rgb(31, 10, 18), rgb(31, 10, 18), rgb(37 0 1), rgb(74 2 4));
             color: white;
             align-items: center;
@@ -344,13 +348,27 @@
       background: #1f0a12; 
       background: linear-gradient(179deg,  rgb(74 2 4), rgb(37 0 1));
       color: white;
-      font-family: 'Segoe UI', sans-serif;
-      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif; 
     }
+
+    .rm-item.peak.abc-y {
+    top: -60px;
+}
 
     .roadmap-header {
       text-align: center;
-      margin-bottom: 60px;
+      margin-bottom: 160px;
+    }
+
+    .rm-item.trough.abc-z .flex-con {
+        flex-direction: column-reverse;
+    }
+    .rm-item.trough.abc-z {
+        top: 45px;
+    }
+
+    .rm-item.peak.abc-zap {
+        top: -120px;
     }
 
     .roadmap-title {
@@ -409,11 +427,27 @@
     /* 3. Individual Item Styling */
     .rm-item {
       position: relative;
-      width: 180px;
+      width: 300px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      top: -110px;
     }
+
+    .flex-con
+    {
+            display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    }
+
+    .abc-x .flex-con {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+    align-items: center;
+}
 
     /* --- Positioning Logic (Peak vs Trough) --- */
     /* Items on the "Peak" of the wave */
@@ -523,7 +557,7 @@
     }
 
     .rm-item.trough.abc-x {
-        top: 85px;
+        top: 175px;
     }
 
     /* Responsive Mobile Styling */
@@ -747,7 +781,7 @@
     .link-row {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 0px;
         margin-top: 10px;
     }
 
@@ -833,3 +867,316 @@
             .road-svg { display: none; }
             .road-step-card.left, .road-step-card.right { left: 0; width: 100%; text-align: center; align-items: center; }
         }
+
+
+/* =========================
+   CENTER FOCUS SLIDER
+   ========================= */
+
+.slider-wrapper {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    width: 100%;
+    
+    /* CRITICAL: Padding ensures the first and last items can be centered */
+    /* calc(50% - half_card_width) */
+    padding: 40px calc(50% - 160px); 
+    
+    /* Hide Scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.slider-wrapper::-webkit-scrollbar { 
+    display: none; 
+}
+
+/* Base Card Style (Dimmed State) */
+.card {
+    min-width: 320px;
+    max-width: 320px;
+    scroll-snap-align: center; /* Snap exactly to center */
+    flex-shrink: 0;
+    
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 25px;
+    backdrop-filter: blur(5px);
+    border-radius: 12px;
+    
+    /* Dimmed Appearance */
+    opacity: 0.4;
+    transform: scale(0.9);
+    filter: blur(1px);
+    transition: all 0.4s ease-in-out; /* Smooth transition */
+}
+
+/* Active Focused Card (Highlighted State) */
+.card.active {
+    opacity: 1;
+    transform: scale(1.1); /* Pop out effect */
+    filter: blur(0);
+    z-index: 10;
+    background-color: rgba(30, 41, 59, 0.8); /* Slightly darker/solid bg */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+    border: 1px solid rgba(59, 130, 246, 0.5); /* Blue border highlight */
+        border-radius: 5px;
+}
+
+/* Card Content Styling */
+.card h3 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: white;
+}
+.card p {
+    font-size: 1rem;
+    color: #cbd5e1;
+    line-height: 1.5;
+}
+
+/* Snake Border spans (keep hidden or dim on inactive cards) */
+.card:not(.active) span {
+    display: none; /* Hide animation on inactive cards for cleaner look */
+}
+
+/* Navigation Buttons Container */
+.slider-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-right: 20px;
+}
+
+/* Arrow Button Styles */
+.slider-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hover Effect */
+.slider-btn:hover {
+    background: #3877d4;
+    border-color: #3877d4;
+    transform: scale(1.1);
+}
+
+/* =========================
+   HEART CRISIS - DASHBOARD STYLE
+   ========================= */
+
+.crisis-section {
+    position: relative;
+    padding: 100px 20px;
+    background: #1f0a12; /* Matches your theme */
+    background: linear-gradient(#091d43, #1f0a12);
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+}
+
+.crisis-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    z-index: 2;
+}
+
+/* --- ECG Background Animation --- */
+.ecg-bg {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    transform: translateY(-50%);
+    opacity: 0.1;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.ecg-line {
+    fill: none;
+    stroke: #ef4444;
+    stroke-width: 3;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: ecgDraw 3s linear infinite;
+}
+
+@keyframes ecgDraw {
+    0% { stroke-dashoffset: 1000; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+/* --- Header --- */
+.crisis-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.crisis-header p {
+    color: #94a3b8;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 10px auto 0;
+}
+
+/* --- Counter & Impact Row --- */
+.counter-row {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 80px;
+    flex-wrap: wrap;
+}
+
+/* Main Live Counter */
+.counter-box {
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    padding: 30px 50px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.live-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #ef4444;
+    font-weight: bold;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.blink-dot {
+    width: 8px;
+    height: 8px;
+    background: #ef4444;
+    border-radius: 50%;
+    animation: blink 1.5s infinite;
+}
+
+.count-number {
+    display: block;
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1;
+    font-variant-numeric: tabular-nums; /* Prevents jittering */
+    background: linear-gradient(180deg, #fff, #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.count-label {
+    color: #94a3b8;
+    font-size: 1rem;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Smaller Impact Boxes */
+.impact-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 30px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    max-width: 200px;
+}
+
+.impact-box h3 {
+    font-size: 2rem;
+    margin: 0;
+    color: #fff;
+}
+
+.impact-box p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    color: #94a3b8;
+    line-height: 1.4;
+}
+
+.impact-box.warning h3 {
+    color: #fbbf24;
+}
+
+/* --- Stats Grid (Rings + Desc) --- */
+.ring-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    justify-items: center;
+}
+
+.stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: rgb(59 30 30 / 23%);
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s ease;
+    width: 100%;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.stat-desc {
+    margin-top: 20px;
+    font-size: 0.95rem;
+    color: #cbd5e1;
+    line-height: 1.6;
+    max-width: 80%;
+}
+
+.stat-desc strong {
+    color: #fff;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+    .counter-row {
+        flex-direction: column;
+        align-items: center;
+    }
+    .impact-box {
+        max-width: 100%;
+        text-align: center;
+        width: 100%;
+    }
+}
